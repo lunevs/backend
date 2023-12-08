@@ -1,7 +1,9 @@
 package ru.ichtus.churchevents.backend.configurations;
 
+import com.mongodb.MongoClientSettings;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
+import org.bson.UuidRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +22,11 @@ public class MongoConfig extends AbstractReactiveMongoConfiguration {
 
     @Override
     public MongoClient reactiveMongoClient() {
-        return MongoClients.create();
+        return MongoClients.create(
+                MongoClientSettings.builder()
+                        .uuidRepresentation(UuidRepresentation.STANDARD)
+                        .build()
+        );
     }
 
     @Override

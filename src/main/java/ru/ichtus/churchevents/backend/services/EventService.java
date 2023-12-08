@@ -19,7 +19,12 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public Mono<EventDocument> addNewEvent(EventDocument eventDocument) {
+    public void addNewEvent(EventDocument eventDocument) {
+        eventDocument.setId(UUID.randomUUID());
+        eventRepository.save(eventDocument).subscribe();
+    }
+
+    public Mono<EventDocument> updateEvent(EventDocument eventDocument) {
         return eventRepository.save(eventDocument);
     }
 
